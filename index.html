@@ -1,268 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Wind Calculator</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f3e9;
-            color: #4a4a4a;
-        }
-        .calculator {
-            background-color: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #e67e22;
-        }
-        h1 {
-            color: #d35400;
-            text-align: center;
-            margin-top: 10px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .plane-icon {
-            font-size: 32px;
-            transform: rotate(-45deg);
-            display: inline-block;
-        }
-        .input-group {
-            margin-bottom: 18px;
-        }
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #7f5305;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #e0d3c0;
-            border-radius: 6px;
-            box-sizing: border-box;
-            background-color: #fff9f0;
-            transition: all 0.3s ease;
-        }
-        input:focus {
-            border-color: #e67e22;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
-        }
-        small {
-            color: #95a5a6;
-            display: block;
-            margin-top: 4px;
-            font-style: italic;
-        }
-        button {
-            background-color: #e67e22;
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            font-weight: 600;
-            transition: background-color 0.2s;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #d35400;
-        }
-        .results {
-            margin-top: 25px;
-            padding: 20px;
-            background-color: #fdf6e9;
-            border-radius: 8px;
-            border-left: 5px solid #e67e22;
-        }
-        .results h3 {
-            color: #d35400;
-            margin-top: 0;
-        }
-        .hidden {
-            display: none;
-        }
-        .drift-info {
-            background-color: #fef5e7;
-            border-left: 5px solid #f39c12;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-        .key-value {
-            font-weight: 700;
-            color: #d35400;
-        }
-        .section {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f0e0d0;
-        }
-        .section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .wind-type {
-            font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-left: 5px;
-        }
-        .tailwind {
-            background-color: #d5f5e3;
-            color: #27ae60;
-        }
-        .headwind {
-            background-color: #fadbd8;
-            color: #c0392b;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Wind Calculator</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
+
+  <style>
+    :root {
+      --primary: #005f99;
+      --accent: #f39c12;
+      --bg-light: #f2f6fc;
+      --bg-card: #ffffff;
+      --text-dark: #1e2a38;
+      --text-muted: #607d8b;
+      --radius: 0.75rem;
+      --transition: 0.3s ease;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .calculator {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 700px;
+      overflow: hidden;
+      animation: fadeIn 0.5s var(--transition) both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), #004066);
+      padding: 2rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .icon-plane {
+      font-size: 1.75rem;
+      transform: rotate(-45deg);
+    }
+
+    form {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 600px) {
+      form { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition);
+    }
+    .form-group:hover {
+      transform: translateY(-2px);
+    }
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .form-group input {
+      padding: 0.75rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .form-group input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2);
+      outline: none;
+    }
+    .form-group small {
+      margin-top: 0.25rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    button[type="submit"] {
+      grid-column: 1 / -1;
+      padding: 1rem;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+    }
+    button[type="submit"]:hover {
+      background: #e08e0b;
+      transform: translateY(-2px);
+    }
+
+    .results {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 2rem;
+      border-top: 1px solid #e2e8f0;
+      animation: fadeIn 0.5s var(--transition) both;
+    }
+    .results.hidden {
+      display: none;
+    }
+    .results h2 {
+      grid-column: 1 / -1;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .result-item {
+      text-align: center;
+    }
+    .result-item .label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .result-item .value {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+  </style>
 </head>
 <body>
-    <div class="calculator">
-        <h1><span class="plane-icon">✈</span> Flight Wind Calculator</h1>
+  <div class="calculator">
+    <header>
+      <h1><i class="fas fa-plane icon-plane"></i> Flight Wind Calculator</h1>
+    </header>
 
-        <div class="section">        
-            <div class="input-group">
-                <label for="cruisingSpeed">Aircraft Cruising Speed (knots):</label>
-                <input type="number" id="cruisingSpeed" min="0" value="120">
-            </div>
-            
-            <div class="input-group">
-                <label for="windSpeed">Wind Speed (knots):</label>
-                <input type="number" id="windSpeed" min="0" value="15">
-            </div>
-            
-            <div class="input-group">
-                <label for="windDirection">Wind Direction (degrees from):</label>
-                <input type="number" id="windDirection" min="0" max="359" value="270">
-                <small>* Wind direction is the direction FROM which the wind is blowing</small>
-            </div>
-            
-            <div class="input-group">
-                <label for="heading">Aircraft Heading (degrees):</label>
-                <input type="number" id="heading" min="0" max="359" value="0">
-            </div>
-        </div>
-        
-        <button onclick="calculate()">Calculate</button>
-        
-        <div class="results hidden" id="results">
-            <h3>Results</h3>
-            <div class="section">
-                <p id="windComponent"></p>
-                <p id="groundSpeed"></p>
-                <p id="timeImpact"></p>
-                <p id="timePercent"></p>
-            </div>
-            
-            <div class="drift-info" id="drift-info">
-                <h3>Wind Correction Information</h3>
-                <p id="driftAngle"></p>
-                <p id="headingCorrection"></p>
-                <p>To maintain your desired track, adjust your heading to account for the wind drift.</p>
-            </div>
-        </div>
-    </div>
+    <form id="windCalcForm">
+      <div class="form-group">
+        <label for="cruisingSpeed">Cruising Speed (knots)</label>
+        <input type="number" id="cruisingSpeed" min="0" value="120" required>
+      </div>
+      <div class="form-group">
+        <label for="windSpeed">Wind Speed (knots)</label>
+        <input type="number" id="windSpeed" min="0" value="15" required>
+      </div>
+      <div class="form-group">
+        <label for="windDirection">Wind Direction (° from)</label>
+        <input type="number" id="windDirection" min="0" max="359" value="270" required>
+        <small>Direction FROM which wind is blowing</small>
+      </div>
+      <div class="form-group">
+        <label for="heading">Aircraft Heading (°)</label>
+        <input type="number" id="heading" min="0" max="359" value="0" required>
+      </div>
+      <button type="submit">Calculate <i class="fas fa-wind"></i></button>
+    </form>
 
-    <script>
-        // Helper function for angle normalization
-        function normalizeAngle(angle) {
-            return ((angle % 360) + 360) % 360;
-        }
+    <section class="results hidden" id="resultsPanel">
+      <h2>Results</h2>
+      <div class="result-item">
+        <span class="label">Wind Component</span>
+        <span class="value" id="windComponentVal"></span>
+      </div>
+      <div class="result-item">
+        <span class="label">Ground Speed</span>
+        <span class="value" id="groundSpeedVal"></span>
+      </div>
+      <div class="result-item">
+        <span class="label">Time Impact</span>
+        <span class="value" id="timeImpactVal"></span>
+      </div>
+      <div class="result-item">
+        <span class="label">Speed % Impact</span>
+        <span class="value" id="timePercentVal"></span>
+      </div>
+      <div class="result-item">
+        <span class="label">Drift Angle</span>
+        <span class="value" id="driftAngleVal"></span>
+      </div>
+      <div class="result-item">
+        <span class="label">Corrected Heading</span>
+        <span class="value" id="correctedHeadingVal"></span>
+      </div>
+    </section>
+  </div>
 
-        // Helper function to find the smallest angle between two angles
-        function angleDifference(angle1, angle2) {
-            const diff = Math.abs(angle1 - angle2) % 360;
-            return diff > 180 ? 360 - diff : diff;
-        }
+  <script>
+    function normalizeAngle(angle) {
+      return ((angle % 360) + 360) % 360;
+    }
 
-        function calculate() {
-            // Get input values
-            const cruisingSpeed = parseFloat(document.getElementById('cruisingSpeed').value);
-            const windSpeed = parseFloat(document.getElementById('windSpeed').value);
-            const windDirection = normalizeAngle(parseFloat(document.getElementById('windDirection').value));
-            const heading = normalizeAngle(parseFloat(document.getElementById('heading').value));
-            
-            // Validate input
-            if (isNaN(cruisingSpeed) || isNaN(windSpeed) || isNaN(windDirection) || isNaN(heading)) {
-                alert("Please enter valid numbers for all fields");
-                return;
-            }
-            
-            // Calculate the relative angle between wind and aircraft
-            // Wind direction is where the wind is coming FROM
-            // We need to add 180° to get the direction the wind is going TO
-            const windToDirection = normalizeAngle(windDirection + 180);
-            
-            // Calculate angle between wind and aircraft heading
-            const relativeWindAngle = normalizeAngle(windToDirection - heading);
-            
-            // Calculate wind components relative to aircraft heading
-            // headwindComponent is positive for headwind, negative for tailwind
-            const headwindComponent = -windSpeed * Math.cos(relativeWindAngle * Math.PI / 180);
-            const crosswindComponent = windSpeed * Math.sin(relativeWindAngle * Math.PI / 180);
-            
-            // Calculate ground speed (TAS + tailwind or - headwind)
-            const groundSpeed = cruisingSpeed + (-1 * headwindComponent);
-            
-            // Calculate drift angle (wind correction angle)
-            const driftAngle = Math.atan2(crosswindComponent, cruisingSpeed) * 180 / Math.PI;
-            
-            // Calculate corrected heading to maintain track
-            const desiredTrack = heading;
-            const correctedHeading = normalizeAngle(heading - driftAngle);
-            
-            // Calculate time impact - CORRECTED LOGIC HERE
-            // With tailwind (negative headwind component): timeRatio < 1, we gain time (negative seconds impact)
-            // With headwind (positive headwind component): timeRatio > 1, we lose time (positive seconds impact)
-            const timeRatio = cruisingSpeed / groundSpeed;
-            const secondsPerMinuteImpact = (timeRatio - 1) * 60; // Seconds gained (negative) or lost (positive) per minute
-            
-            // Determine wind type (headwind or tailwind)
-            const windType = headwindComponent >= 0 ? 'HEADWIND' : 'TAILWIND';
-            const windTypeClass = headwindComponent >= 0 ? 'headwind' : 'tailwind';
-            
-            // Update results
-            document.getElementById('windComponent').innerHTML = `
-                Wind Component: <span class="key-value">${Math.abs(headwindComponent).toFixed(1)} knots</span>
-                <span class="wind-type ${windTypeClass}">${windType}</span>
-            `;
-            
-            document.getElementById('groundSpeed').innerHTML = `Ground Speed: <span class="key-value">${groundSpeed.toFixed(1)} knots</span>`;
-            
-            if (secondsPerMinuteImpact > 0) {
-                document.getElementById('timeImpact').innerHTML = `Time Impact: You will <span class="key-value">LOSE ${Math.abs(secondsPerMinuteImpact).toFixed(1)} seconds per minute</span>`;
-            } else if (secondsPerMinuteImpact < 0) {
-                document.getElementById('timeImpact').innerHTML = `Time Impact: You will <span class="key-value">GAIN ${Math.abs(secondsPerMinuteImpact).toFixed(1)} seconds per minute</span>`;
-            } else {
-                document.getElementById('timeImpact').innerHTML = `Time Impact: <span class="key-value">No time gain or loss</span>`;
-            }
-            
-            const percentImpact = Math.abs((1 - 1/timeRatio) * 100);
-            document.getElementById('timePercent').innerHTML = `This represents <span class="key-value">${percentImpact.toFixed(1)}%</span> ${groundSpeed > cruisingSpeed ? 'faster' : 'slower'} than your planned cruising speed`;
-            
-            // Update drift information
-            document.getElementById('driftAngle').innerHTML = `Wind Drift Angle: <span class="key-value">${Math.abs(driftAngle).toFixed(1)}°</span> ${driftAngle >= 0 ? 'right' : 'left'} of course`;
-            document.getElementById('headingCorrection').innerHTML = `Recommended Heading: <span class="key-value">${correctedHeading.toFixed(1)}°</span> (to maintain track of ${desiredTrack}°)`;
-            
-            // Show results
-            document.getElementById('results').classList.remove('hidden');
-        }
-    </script>
+    document.getElementById('windCalcForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const cruisingSpeed = parseFloat(document.getElementById('cruisingSpeed').value);
+      const windSpeed = parseFloat(document.getElementById('windSpeed').value);
+      const windDirection = normalizeAngle(parseFloat(document.getElementById('windDirection').value));
+      const heading = normalizeAngle(parseFloat(document.getElementById('heading').value));
+
+      if (isNaN(cruisingSpeed) || isNaN(windSpeed) || isNaN(windDirection) || isNaN(heading)) {
+        alert('Please enter valid numbers for all fields');
+        return;
+      }
+
+      // Convert wind FROM to TO direction
+      const windToDir = normalizeAngle(windDirection + 180);
+      const relAngle = normalizeAngle(windToDir - heading);
+
+      // Calculate components
+      const headComp = -windSpeed * Math.cos(relAngle * Math.PI/180);
+      const crossComp = windSpeed * Math.sin(relAngle * Math.PI/180);
+      const groundSpeed = cruisingSpeed - headComp;
+
+      // Drift correction
+      const driftAngle = Math.atan2(crossComp, cruisingSpeed) * 180/Math.PI;
+      const correctedHeading = normalizeAngle(heading - driftAngle);
+
+      // Time impacts
+      const timeRatio = cruisingSpeed / groundSpeed;
+      const secImpact = (timeRatio - 1) * 60;
+      const percentImpact = Math.abs((1 - 1/timeRatio) * 100);
+
+      // Populate values
+      document.getElementById('windComponentVal').textContent = `${Math.abs(headComp).toFixed(1)} kt (${headComp >= 0 ? 'Headwind' : 'Tailwind'})`;
+      document.getElementById('groundSpeedVal').textContent = `${groundSpeed.toFixed(1)} kt`;
+      document.getElementById('timeImpactVal').textContent = secImpact > 0 ? `Lose ${secImpact.toFixed(1)} s/min` : `Gain ${Math.abs(secImpact).toFixed(1)} s/min`;
+      document.getElementById('timePercentVal').textContent = `${percentImpact.toFixed(1)}% ${groundSpeed > cruisingSpeed ? 'faster' : 'slower'}`;
+      document.getElementById('driftAngleVal').textContent = `${Math.abs(driftAngle).toFixed(1)}° ${driftAngle >= 0 ? 'right' : 'left'}`;
+      document.getElementById('correctedHeadingVal').textContent = `${correctedHeading.toFixed(1)}°`;
+
+      document.getElementById('resultsPanel').classList.remove('hidden');
+    });
+  </script>
 </body>
 </html>
